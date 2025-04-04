@@ -51,7 +51,7 @@ def main() -> None:
     extract_dir = Path(tempfile.mktemp())
     package_json_path = extract_dir / "package.json"
 
-    logger.info("Attempting to patch desktop file name for asar file: {}", asar_path)
+    logger.info("Attempting to patch desktop file name for asar file: %s", asar_path)
 
     try:
         asarPy.extract_asar(asar_path, extract_dir)
