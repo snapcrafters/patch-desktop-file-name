@@ -34,15 +34,17 @@ import shutil
 import json
 import sys
 import os
+from pathlib import Path
 
 
 def main() -> None:
     asar_path = sys.argv[1]
-    extract_dir = tempfile.mktemp()
+    extract_dir = Path(tempfile.mktemp())
+    package_json_path = extract_dir / "package.json"
 
     asarPy.extract_asar(asar_path, extract_dir)
 
-    with open(os.path.join(extract_dir, "package.json"), "r", encoding="utf-8") as f:
+    with open(package_json_path, "r", encoding="utf-8") as f:
         package_json = json.load(f)
 
     project_name = os.getenv("CRAFT_PROJECT_NAME")
@@ -51,7 +53,7 @@ def main() -> None:
 
     package_json["desktopName"] = f"{project_name}_{project_name}.desktop"
 
-    with open(os.path.join(extract_dir, "package.json"), "w", encoding="utf-8") as f:
+    with open(package_json_path, "w", encoding="utf-8") as f:
         json.dump(package_json, f)
 
     asarPy.pack_asar(extract_dir, asar_path)
