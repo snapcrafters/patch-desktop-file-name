@@ -6,6 +6,7 @@
 # BSD 2-Clause License
 #
 # Copyright (c) 2024, JakobDev
+# Modifications by Snapcrafters, 2025
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -38,6 +39,12 @@ import logging
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
+
+# Set up logging configuration to print info level logs by default
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s - %(message)s",
+)
 
 def main() -> None:
     asar_path = sys.argv[1]
