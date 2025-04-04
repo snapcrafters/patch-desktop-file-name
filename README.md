@@ -10,12 +10,13 @@ To use this script, you should modify your snapcraft.yaml file to include the fo
 ```yaml
 # ...
 parts:
+  # Needed for setting the proper desktop file name in the electron apps
   patch-desktop-file-name:
-    after: [<app_part>]
-    source: https://github.com/snapcrafters/patch-desktop-file-name.git
-    source-subdir: electron
+    after: [discord]
     plugin: nil
     build-snaps: [astral-uv]
     override-build: |
-      ./patch_desktop_file_name.py "${CRAFT_STAGE}/usr/share/discord/resources/app.asar"
+      uv run \
+        https://raw.githubusercontent.com/snapcrafters/patch-desktop-file-name/refs/heads/main/electron/patch-desktop-filename.py \
+        "${CRAFT_STAGE}/usr/share/discord/resources/app.asar"
 ```
