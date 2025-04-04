@@ -45,7 +45,11 @@ def main() -> None:
     with open(os.path.join(extract_dir, "package.json"), "r", encoding="utf-8") as f:
         package_json = json.load(f)
 
-    package_json["desktopName"] = os.getenv("CRAFT_PROJECT_NAME") + "_" + os.getenv("CRAFT_PROJECT_NAME") + ".desktop"
+    project_name = os.getenv("CRAFT_PROJECT_NAME")
+    if project_name is None:
+        exit(1)
+
+    package_json["desktopName"] = f"{project_name}_{project_name}.desktop"
 
     with open(os.path.join(extract_dir, "package.json"), "w", encoding="utf-8") as f:
         json.dump(package_json, f)
